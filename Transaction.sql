@@ -1,0 +1,24 @@
+---EXPLICIT TRANSACTION 
+
+BEGIN  TRANSACTION 
+
+   SELECT * FROM  COURSE
+
+   INSERT INTO  COURSE  VALUES(8,'DB2','HYD',50,10000,'SQL TRAINING')
+
+   SELECT * FROM  COURSE
+
+   DELETE FROM COURSE  WHERE  CID = 2
+
+   SELECT * FROM COURSE
+
+   ROLLBACK  TRANSACTION
+
+   SELECT * FROM  COURSE
+   
+   
+   
+  deleted record 2 and also inserted record 8 will be rollbacked as we are doing explicit TRANSACTION by using BEGIN TRANSACTION.
+  
+  
+  
