@@ -190,3 +190,8 @@ GROUP BY
     activity_date
 ORDER BY 
     activity_date;
+
+
+to get next number or comparing current row with next row 
+use  t1.id = t2.id + 1 to get next consecutive number r
+LAG(num,1) OVER (ORDER BY id) AS prev_num 
