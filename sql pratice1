@@ -194,4 +194,12 @@ ORDER BY
 
 to get next number or comparing current row with next row 
 use  t1.id = t2.id + 1 to get next consecutive number r
+
 LAG(num,1) OVER (ORDER BY id) AS prev_num 
+LAG(num,2) OVER(Order by id) AS prev_num by 2 
+
+--WHERE num = prev1 AND num = prev2; --get consecutive numbers 
+
+
+
+
