@@ -90,6 +90,13 @@ LEFT JOIN seat s2
 ON IF(s1.id % 2 != 0, s2.id = s1.id + 1, s2.id = s1.id - 1)
 
 
+-- using not in 
+identify only people who have gold medal, if if they have bronze should not show up
+select gold as player_name, count(*) as counts from events
+where gold not in (select bronze from events UNION select silver from events)
+group by gold;
+
+
 
 
 +-----+-----+
