@@ -1,0 +1,37 @@
+ with temp1 as (SELECT *,
+      LAG (event_date, 1) 
+      OVER (PARTITION BY user_id ORDER BY event_date ) AS prev_event_date,
+      LAG (event_name, 1) 
+      OVER (PARTITION BY user_id ORDER BY event_name ) AS prev_event_name
+      FROM activity )
+      -- where event_name='app-purchase' )
+    select * from temp1
+
+# user_id	event_name	event_date	country	prev_event_date	prev_event_name
+    1	app-installed	2022-01-01	India		
+    1	app-purchase	2022-01-02	India	      2022-01-01	      app-installed
+    2	app-installed	2022-01-01	USA		
+    3	app-installed	2022-01-01	USA		
+    3	app-purchase	2022-01-03	USA      	2022-01-01	      app-installed
+    4	app-installed	2022-01-03	India		
+    4	app-purchase	2022-01-03	India    	2022-01-03	    app-installed
+    5	app-installed	2022-01-03	SL		
+    5	app-purchase	2022-01-03	SL	      2022-01-03      	app-installed
+    6	app-installed	2022-01-04	Pakistan		
+    6	app-purchase	2022-01-04	Pakistan	    2022-01-04	app-installed
+
+
+
+ with temp1 as (SELECT *,
+      LAG (event_date, 1) 
+      OVER (PARTITION BY user_id ORDER BY event_date ) AS prev_event_date,
+      LAG (event_name, 1) 
+      OVER (PARTITION BY user_id ORDER BY event_name ) AS prev_event_name
+      FROM activity )
+      -- where event_name='app-purchase' )
+    select * from temp1
+    where event_name='app-purchase' and prev_event_name='app-installed' and
+    datediff(event_date,prev_event_date)=1;
+    
+    
+      
