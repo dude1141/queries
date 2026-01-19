@@ -1,1 +1,1 @@
-sqlservers/Triggers_and_cursors.sql
+sqlservers/cursortriggers.sql
