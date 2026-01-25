@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Access SQL File</title>
+    <style>
+        body { font-family: Arial; }
+        #sqlLink { display: none; margin-top: 20px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+
+<h3>Answer the questions to access the SQL file</h3>
+
+<label>1. What is 2 + 3.5 - 8 + 0.9?</label><br>
+<input type="text" id="q1"><br><br>
+
+<label>2. What keyword retrieves data in SQL?</label><br>
+<input type="text" id="q2"><br><br>
+
+<button onclick="validate()">Submit</button>
+
+<p id="msg"></p>
+
+<div id="sqlLink">
+    <p class="success">Access granted</p>
+    <a href="top5.sql" download>Download SQL File</a>
+</div>
+
+<script>
+function validate() {
+    const q1 = document.getElementById("q1").value.trim();
+    const q2 = document.getElementById("q2").value.trim().toLowerCase();
+
+    if (q1 === "5" && q2 === "select") {
+        document.getElementById("msg").innerText = "";
+        document.getElementById("sqlLink").style.display = "block";
+    } else {
+        document.getElementById("msg").innerText =
+            "Incorrect answers. Try again.";
+        document.getElementById("msg").className = "error";
+    }
+}
+</script>
+
+</body>
+</html>
