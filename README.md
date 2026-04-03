@@ -10,4 +10,5 @@ SSIS:
 3. variables and constraints https://youtu.be/SV_SQzfDDsI
 4. https://youtu.be/-km_7y6vano constraints
 5. https://youtu.be/jwSakjneGuo DerivedTransform
-6. 
+6. https://youtu.be/EWIow6r3PRU conditionalsplit
+7. 
