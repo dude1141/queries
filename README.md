@@ -11,4 +11,5 @@ SSIS:
 4. https://youtu.be/-km_7y6vano constraints
 5. https://youtu.be/jwSakjneGuo DerivedTransform
 6. https://youtu.be/EWIow6r3PRU conditionalsplit
-7. 
+7. https://youtu.be/21rOfwXRkhs handlingerrors and derived transforms
+8. 
