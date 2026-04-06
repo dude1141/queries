@@ -12,4 +12,4 @@ SSIS:
 5. https://youtu.be/jwSakjneGuo DerivedTransform
 6. https://youtu.be/EWIow6r3PRU conditionalsplit
 7. https://youtu.be/21rOfwXRkhs handlingerrors and derived transforms
-8. 
+8. exceldataloadssis https://youtu.be/jvwueDgWBwo
