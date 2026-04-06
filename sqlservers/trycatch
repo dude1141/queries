@@ -1,0 +1,47 @@
+Begin
+  Begin try
+  declare...
+  end try
+  Begin catch
+  end catch
+end
+
+
+
+alter proc SP4(@A INT, @B INT)
+as
+Begin
+	begin try
+		declare 
+		@C INT
+		SET @C= @A/@B
+		PRINT @C
+	end try
+	begin catch
+		PRINT('B value should not be 0')
+	end catch
+end
+
+exec SP4 4,0
+
+create table banks(acctno int, acctname varchar(30), balance decimal check(balance>0));
+insert into banks values(1000, 'savings', 200000);
+insert into banks values(2000, 'current',10000);
+select * From banks;
+
+create proc SP67(@amount money, @accno int)
+as
+Begin
+	begin try
+		--declare 
+		--@C INT
+		update banks set balance=balance-@amount where acctno=@accno
+		-- PRINT @C
+	end try
+	begin catch
+		PRINT('insufficient blalance')
+	end catch
+end
+
+exec SP67 500000,2000
+-- exec SP6 4,0
