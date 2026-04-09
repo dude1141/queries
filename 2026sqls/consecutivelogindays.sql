@@ -23,7 +23,6 @@ consecutive days more than 3:
   from loginss)
     select user_id ,dtgrp ,count(1) from cte group by user_id ,dtgrp having count(1) >3
  
-![Annotated flow](docs/login-analysis.png)
 
 
 select * ,
