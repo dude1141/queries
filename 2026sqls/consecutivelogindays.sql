@@ -25,6 +25,8 @@ consecutive days more than 3:
  
 
 
+#we need to do minus logindate - denserrank  interval to get the dategrp and group it over user_id
+    
 select * ,
   dense_rank() over (partition by user_id order by user_id,login_date),
   date_sub(login_date,interval dense_rank() over
