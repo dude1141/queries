@@ -47,3 +47,26 @@ select * ,
     3	    2024-01-10	    1	        2024-01-09
     3	    2024-01-11	    2	        2024-01-09
     3	    2024-01-12    	3        	2024-01-09
+
+
+# we need to find if users login  least 3 different days, but not consecutive days 
+#based on above we must 2 answer becayse 3 and 1 logged consective
+
+  select * from loginss;
+  
+  with cte1 as (select distinct user_id, login_date from loginss)
+  , cte2 as (select user_id,login_date,
+  lag(login_date,1,login_date) over 
+  (partition by user_id order by login_date) as lag_date,
+  datediff(
+  login_date,lag(login_date,1,login_date) 
+  over (partition by user_id order by login_date) )as dates_diff 
+  from cte1  )
+  select * From cte2;
+  ;
+  cte3 as (select distinct(user_id) as distincuserid from cte2
+  where dates_diff=1)
+  select user_id from cte1 where user_id
+  not in (select distincuserid from cte3 )
+  group by user_id having count(*) >=3
+  
