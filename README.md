@@ -13,4 +13,4 @@ SSIS:
 6. https://youtu.be/EWIow6r3PRU conditionalsplit
 7. https://youtu.be/21rOfwXRkhs handlingerrors and derived transforms
 8. exceldataloadssis https://youtu.be/jvwueDgWBwo
-9. https://youtube.com/shorts/cqGZ6XJk1ic?feature=share transforms
+9. checkpointing [transforms](https://youtu.be/o1fSaOh574I)
