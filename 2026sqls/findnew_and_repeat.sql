@@ -15,3 +15,46 @@ input
 
 
 #you need to first get order_date and minus it with ,using case when
+
+
+
+
+CREATE TABLE purchases (
+    user_id INT,
+    purchase_date DATE,
+    amount INT
+);
+
+INSERT INTO purchases VALUES
+(1, '2024-01-01', 100),
+(1, '2024-01-05', 200),
+(1, '2024-01-20', 300),
+(2, '2024-01-02', 150),
+(2, '2024-01-03', 200),
+(3, '2024-01-10', 500),
+(3, '2024-02-01', 700),
+(4, '2024-01-15', 400);
+
+select * from purchases;
+-- First Time vs Repeat Purchase 
+
+with cte4 as( 
+select  user_id, purchase_date,min(purchase_date)  over (partition by user_id order by purchase_date)  as minpurchase from purchases )
+, cte5 as (select *, dense_rank() over (partition by user_id order by purchase_date) from cte4
+)
+,cte6 as (select *, case when purchase_date- minpurchase =1 then 'new' else 'repeat' end as flag from cte5)
+select * from cte6;
+
+
+
+# user_id	purchase_date	minpurchase	    dense_rank() over (partition by user_id order by purchase_date)	flag
+1	        2024-01-01	        2024-01-01	    1	                                                        repeat
+1	        2024-01-05          2024-01-01	    2	                                                        repeat
+1	        2024-01-20	        2024-01-01	    3	                                                        repeat
+2	        2024-01-02          2024-01-02	    1	                                                        repeat
+2	2024-01-03	2024-01-02	2	new
+3	2024-01-10	2024-01-10	1	repeat
+3	2024-02-01	2024-01-10	2	repeat
+4	2024-01-15	2024-01-15	1	repeat
+
+
