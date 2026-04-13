@@ -47,6 +47,7 @@ select * from cte6;
 
 
 
+
 # user_id	purchase_date	minpurchase	    dense_rank() over (partition by user_id order by purchase_date)	flag
 1	        2024-01-01	        2024-01-01	    1	                                                        repeat
 1	        2024-01-05          2024-01-01	    2	                                                        repeat
@@ -56,5 +57,37 @@ select * from cte6;
 3	2024-01-10	2024-01-10	1	repeat
 3	2024-02-01	2024-01-10	2	repeat
 4	2024-01-15	2024-01-15	1	repeat
+
+
+    
+with cte4 as( 
+select  user_id, purchase_date,min(purchase_date)  over (partition by user_id order by purchase_date)  as minpurchase from purchases )
+, cte5 as (select *, dense_rank() over (partition by user_id order by purchase_date) from cte4
+)
+,cte6 as (select a.*, case when a.purchase_date=a.minpurchase then 1 else 0 end as first_visit_flag,
+case when a.purchase_date != a.minpurchase  then 1 else 0 end as repeat_visit_flag from cte5 a join cte4 b on a.user_id=b.user_id)
+select * from cte6;
+
+# user_id	purchase_date	minpurchase	dense_rank() over (partition by user_id order by purchase_date)	first_visit_flag	repeat_visit_flag
+1	2024-01-01	2024-01-01	1	1	0
+1	2024-01-01	2024-01-01	1	1	0
+1	2024-01-01	2024-01-01	1	1	0
+1	2024-01-05	2024-01-01	2	0	1
+1	2024-01-05	2024-01-01	2	0	1
+1	2024-01-05	2024-01-01	2	0	1
+1	2024-01-20	2024-01-01	3	0	1
+1	2024-01-20	2024-01-01	3	0	1
+1	2024-01-20	2024-01-01	3	0	1
+2	2024-01-02	2024-01-02	1	1	0
+2	2024-01-02	2024-01-02	1	1	0
+2	2024-01-03	2024-01-02	2	0	1
+2	2024-01-03	2024-01-02	2	0	1
+3	2024-01-10	2024-01-10	1	1	0
+3	2024-01-10	2024-01-10	1	1	0
+3	2024-02-01	2024-01-10	2	0	1
+3	2024-02-01	2024-01-10	2	0	1
+4	2024-01-15	2024-01-15	1	1	0
+
+
 
 
