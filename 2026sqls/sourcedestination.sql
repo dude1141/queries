@@ -47,6 +47,18 @@ Chennai	           Pune	Pune	    Chennai	    400	400
 Pune	        Chennai	        Chennai	Pune	400	400
 .
 
+    with cte as (
+select *,row_number() over () as id from routes
+)
+select a.source_city as asrccity, a.destination_city as bdestcity
+, b.source_city as bsrccity , b.destination_city as bdestination,
+a.distance as adist ,b.distance as bdist
+ From cte a join cte b
+ on a.source_city= b.destination_city
+and a.id<b.id;
+
+compare row with another row so as to restrict output 
+
 # asrccity	bdestcity	bsrccity	bdestination	adist	bdist
 Bangalore	Hyderabad	Hyderabad	Bangalore	    400	    400
 Mumbai	    Delhi    	Delhi	    Mumbai    	    400	    400
