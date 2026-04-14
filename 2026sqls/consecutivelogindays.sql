@@ -86,3 +86,48 @@ select * ,
 	3		2024-01-11	2024-01-10		1
 	3		2024-01-12	2024-01-11		1
 
+
+
+
+INSERT INTO pwc_attandance_logs (emp_id, log_date, flag) VALUES
+(101, '2024-01-02', 'N'),
+(101, '2024-01-03', 'Y'),
+(101, '2024-01-04', 'N'),
+(101, '2024-01-07', 'Y'),
+(102, '2024-01-01', 'N'),
+(102, '2024-01-02', 'Y'),
+(102, '2024-01-03', 'Y'),
+(102, '2024-01-04', 'N'),
+(102, '2024-01-05', 'Y'),
+(102, '2024-01-06', 'Y'),
+(102, '2024-01-07', 'Y'),
+(103, '2024-01-01', 'N'),
+(103, '2024-01-04', 'N'),
+(103, '2024-01-05', 'Y'),
+(103, '2024-01-06', 'Y'),
+(103, '2024-01-07', 'N');
+
+#get DAY, then create rownumber and then day-RN will give groups 
+
+# emp_idog_date	flag	day	RN	grp
+	101	2024-01-03	Y	3	1	2
+	101	2024-01-07	Y	7	2	5
+	102	2024-01-02	Y	2	1	1
+	102	2024-01-03	Y	3	2	1
+	102	2024-01-05	Y	5	3	2
+	102	2024-01-06	Y	6	4	2
+	102	2024-01-07	Y	7	5	2
+	103	2024-01-05	Y	5	1	4
+	103	2024-01-06	Y	6	2	4
+
+
+	
+select * from pwc_attandance_logs;
+with cte4 as (select * , DAY(log_date) as day from  pwc_attandance_logs where flag='Y'),
+ cte5 as (select  * ,row_number() over (partition by emp_id order by log_date) as RN from cte4),
+ cte6 as (select *, day - RN as grp from cte5) 
+ select emp_id, min(log_date) as startdate, max(log_date) as enddate
+, count(1) From cte6 group by emp_id, grp;
+
+
+
