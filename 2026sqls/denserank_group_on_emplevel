@@ -1,0 +1,67 @@
+# emp_id	emp_name	dept_name	salary
+101	Mohan	Admin	4000
+108	Maryam	Admin	4000
+113	Gautham	Admin	2000
+120	Monica	Admin	5000
+104	Dorvin	Finance	6500
+106	Rajesh	Finance	5000
+116	Satya	Finance	6500
+118	Tejaswi	Finance	5500
+102	Rajkumar	HR	3000
+105	Rohit	HR	3000
+107	Preet	HR	7000
+114	Manisha	HR	3000
+117	Adarsh	HR	3500
+119	Cory	HR	8000
+103	Akbar	IT	4000
+109	Sanjay	IT	6500
+110	Vasudha	IT	7000
+111	Melinda	IT	8000
+112	Komal	IT	10000
+115	Chandni	IT	4500
+121	Rosalin	IT	6000
+122	Ibrahim	IT	8000
+123	Vikram	IT	8000
+124	Dheeraj	IT	11000
+
+
+
+with cte24 as (select *,
+dense_rank() over (partition by dept_name order by salary desc)
+as highrank
+ from employee3
+)
+select emp_id, emp_name,dept_name, salary,
+ min(salary) as minsalary, max(salary) as maxsalary 
+ from cte24 group by dept_name;
+
+#only dense rank gives your answer but it does not give you employeelevel
+#it gives dept level
+
+# for emp level ,used DENSE_RANK() again
+
+with cte2 as (select *,
+dense_rank() over (partition by dept_name order by salary desc)
+as highrank,
+dense_rank() over (partition by dept_name order by salary asc)
+as lowrank
+ from employee3
+)
+select emp_id, emp_name,dept_name, salary from cte2 
+where highrank =1 or lowrank=1;
+
+
+# emp_id	emp_name	dept_name	salary
+113	Gautham	Admin	2000
+120	Monica	Admin	5000
+106	Rajesh	Finance	5000
+104	Dorvin	Finance	6500
+116	Satya	Finance	6500
+102	Rajkumar	HR	3000
+105	Rohit	HR	3000
+114	Manisha	HR	3000
+119	Cory	HR	8000
+103	Akbar	IT	4000
+124	Dheeraj	IT	11000
+
+
