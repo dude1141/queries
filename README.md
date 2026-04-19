@@ -14,3 +14,4 @@ SSIS:
 7. https://youtu.be/21rOfwXRkhs handlingerrors and derived transforms
 8. exceldataloadssis https://youtu.be/jvwueDgWBwo
 9. checkpointing [transforms](https://youtu.be/o1fSaOh574I)
+10. https://youtu.be/xBHZyjaBWxs lookup, incremental load
