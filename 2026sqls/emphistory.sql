@@ -99,19 +99,18 @@ case
        end as status
 from cte;
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    --- identify employee whose sal has never decreased onver time
-    
-    
-    
+       -- find the average time (in months) between salary changes for each employee 
+
+	with cte as (select *,  lag(change_date,1)  
+        over (partition by employee_id
+        order by change_date desc)  as prevchng
+    from  salary_history 
+    )
+        select employee_id,
+        AVG(TIMESTAMPDIFF(MONTH,prevchng,change_date)) as avgmonthchange
+        From cte
+        where prevchng is not null
+        group by employee_id;
     
     
     
