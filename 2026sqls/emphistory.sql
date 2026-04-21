@@ -80,6 +80,31 @@ VALUES
     
     -- identify employee whose salar never decreased onver time
     
+       
+	-- identify employee whose salary never decreased onver time
+with cte as (
+    select *,
+           lag(salary) over (
+               partition by employee_id
+               order by change_date
+           ) as prevsal
+    from salary_history
+)select employee_id,
+       change_date,
+       prevsal,
+       salary,
+case 
+           when prevsal is not null and salary < prevsal then 'Decreased'
+           else 'Not Decreased'
+       end as status
+from cte;
+    
+    
+    
+    
+    
+    
+    
     
     
     
