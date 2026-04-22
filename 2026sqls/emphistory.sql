@@ -101,16 +101,21 @@ from cte;
     
        -- find the average time (in months) between salary changes for each employee 
 
-	with cte as (select *,  lag(change_date,1)  
-        over (partition by employee_id
-        order by change_date desc)  as prevchng
-    from  salary_history 
-    )
-        select employee_id,
-        AVG(TIMESTAMPDIFF(MONTH,prevchng,change_date)) as avgmonthchange
-        From cte
-        where prevchng is not null
-        group by employee_id;
+    -- find the average time (in months) between salary changes for each employee
+    	 with cte as (select * ,lag(change_date) over (
+               partition by employee_id
+               order by change_date
+           ) as prevsal
+           from salary_history)
+         
+         select employee_id,avg(timestampdiff(month,prevsal,change_date)) as avgmonthsbetweenchanges
+         from cte where prevsal is not null group by employee_id;
+
+mysql TimestampDiff(month,date1,date2)
+-- month
+-- Year
+-- DAY
+
     
     
     
