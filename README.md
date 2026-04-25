@@ -16,3 +16,4 @@ SSIS:
 9. checkpointing [transforms](https://youtu.be/o1fSaOh574I)
 10. https://youtu.be/xBHZyjaBWxs lookup, incremental load
 11. https://youtu.be/9qoxxDlJ3-0, same incremental using sql MERGE statement
+12. https://youtu.be/FoSFgepj1ss
