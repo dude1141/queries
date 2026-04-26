@@ -16,3 +16,49 @@ INSERT INTO source_table (id, start_tms, end_tms) VALUES
 -- select id, start_tms,lead(start_tms,1) over (order by id) from source_table;
 
 select id, start_tms,lead(start_tms,1) over (partition by id order by start_tms) from source_table;
+
+
+
+hackatonquestion:
+
+use tables;
+CREATE TABLE shifts (
+    shift_id INT,
+    warehouse_id INT,
+    shift_start DATETIME,
+    shift_end DATETIME,
+    opening_stock INT,
+    closing_stock INT
+);
+
+INSERT INTO shifts 
+(shift_id, warehouse_id, shift_start, shift_end, opening_stock, closing_stock)
+VALUES
+(1, 1, '2024-01-01 06:00:00', '2024-01-01 14:00:00', 100, 100),
+(2, 1, '2024-01-01 14:00:00', '2024-01-01 22:00:00', 95, 95),
+(3, 1, '2024-01-01 22:00:00', '2024-01-02 06:00:00', 95, 110),
+
+(4, 2, '2024-01-02 06:00:00', '2024-01-02 14:00:00', 120, 115),
+(5, 2, '2024-01-01 06:00:00', '2024-01-01 14:00:00', 200, 200),
+(6, 2, '2024-01-01 14:00:00', '2024-01-01 22:00:00', 180, 180),
+(7, 2, '2024-01-01 22:00:00', '2024-01-02 06:00:00', 190, 185),
+
+(8, 3, '2024-01-01 06:00:00', '2024-01-01 14:00:00', 300, 310),
+(9, 3, '2024-01-01 14:00:00', '2024-01-01 22:00:00', 310, 295),
+(10, 3, '2024-01-01 22:00:00', '2024-01-02 06:00:00', 295, 305),
+(11, 3, '2024-01-02 06:00:00', '2024-01-02 14:00:00', 305, 300);
+
+with cte as (select a.*, lead(shift_id) over (partition by warehouse_id order by shift_start) as incoming_shift_id
+ , lead(shift_start) over (partition by warehouse_id order by shift_start) as incoming_shift_start,
+ lead(opening_stock) over(partition by warehouse_id order by shift_start) as incoming_opening_stock
+ from shifts a),
+cte2 as ( select * , incoming_opening_stock  - closing_stock as discrepancy ,
+timestampdiff(MINUTE,shift_end,incoming_shift_start) as gapmin
+   from cte)  ,
+cte3 as (select *, MAX(ABS(discrepancy)) OVER (PARTITION BY warehouse_id) as worst_handover,
+case when discrepancy <0 then 'shortage' else 'Surplus' end as 'discrepstatus'
+from cte2)
+
+
+select * ,case when ABS(discrepancy)='worst_handover'then 'Y' else 'N' end as isworsthandover from cte3;
+
