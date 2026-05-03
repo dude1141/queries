@@ -18,3 +18,4 @@ SSIS:
 11. https://youtu.be/9qoxxDlJ3-0, same incremental using sql MERGE statement
 12. https://youtu.be/FoSFgepj1ss scd
 13. https://youtu.be/BRzKKYkF9vw Sco
+14 https://youtu.be/NscfhFMW0Fs FELC
