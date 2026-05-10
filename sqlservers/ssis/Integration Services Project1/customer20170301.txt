@@ -1,0 +1,3 @@
+Custid,Name,ShortName
+1,nagendra,nage
+7,Saktivel,sakthi
