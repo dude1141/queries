@@ -19,3 +19,6 @@ SSIS:
 12. https://youtu.be/FoSFgepj1ss scd
 13. https://youtu.be/BRzKKYkF9vw Sco
 14 https://youtu.be/NscfhFMW0Fs FELC
+
+
+![PL/SQL Proc vs Function](plsql_proc_vs_func_package.svg)
