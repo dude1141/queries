@@ -6,16 +6,16 @@ notes:
 
 find records that are in source not in target
 
-select  * from ouh_stg src left join ouh_curr tgt
-on stg.ouhgroup =tgt.ouhgroup 
-where tgt.ouhgroup is null;
+select  * from att_stg src left join att_curr tgt
+on stg.attgroup =tgt.attgroup 
+where tgt.attgroup is null;
 
 
 find records that are in target not in source;
 
-select  * from  ouh_curr tgt left join ouh_stg src 
-on tgt.ouhgroup =stg.ouhgroup 
-where src.ouhgroup is null;
+select  * from  att_curr tgt left join att_stg src 
+on tgt.attgroup =stg.attgroup 
+where src.attgroup is null;
 
 
 -- emp
