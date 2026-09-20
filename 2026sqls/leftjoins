@@ -7,14 +7,14 @@ notes:
 find records that are in source not in target
 
 select  * from att_stg src left join att_curr tgt
-on stg.attgroup =tgt.attgroup 
+on src.attgroup =tgt.attgroup 
 where tgt.attgroup is null;
 
 
 find records that are in target not in source;
 
 select  * from  att_curr tgt left join att_stg src 
-on tgt.attgroup =stg.attgroup 
+on tgt.attgroup =src.attgroup 
 where src.attgroup is null;
 
 
