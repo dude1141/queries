@@ -1,0 +1,59 @@
+notes:
+
+ Find orders that don’t have a matching customer
+ : Find customers who have never placed an order
+
+
+find records that are in source not in target
+
+select  * from ouh_stg src left join ouh_curr tgt
+on stg.ouhgroup =tgt.ouhgroup 
+where tgt.ouhgroup is null;
+
+
+find records that are in target not in source;
+
+select  * from  ouh_curr tgt left join ouh_stg src 
+on tgt.ouhgroup =stg.ouhgroup 
+where src.ouhgroup is null;
+
+
+-- emp
+use sma;
+-- Target table (what we currently have)
+CREATE TABLE emp_cur (
+EmpID INT,
+EmpCode VARCHAR(10),
+EmpName VARCHAR(50),
+CurrentFlg CHAR(1)
+);
+
+-- Source table (today's feed)
+CREATE TABLE emp_stg (
+EmpCode VARCHAR(10),
+EmpName VARCHAR(50)
+);
+
+INSERT INTO emp_cur VALUES
+(1, 'E101', 'John', 'Y'),
+(2, 'E102', 'Priya', 'Y'),
+(3, 'E103 ', 'Mike', 'Y'), -- trailing space
+(4, 'E104', 'Sara', 'Y');
+
+INSERT INTO emp_stg VALUES
+('E101', 'John'),
+('E103', 'Mike'),
+('E105', 'Alex'); -- new employee
+
+
+select * from emp_cur;
+select * from emp_stg;
+select * from emp_cur e left join emp_stg g on trim(e.empcode) = trim(g.empcode);
+select * from emp_cur e left join emp_stg g on TRIM(e.empcode) = TRIM(g.empcode)
+where g.empcode is null;
+
+
+-- means records that are in emp curr but not in emp_stg
+-- called difference also 
+select * from emp_cur e where not exists (Select 1 from emp_stg g where trim(e.empcode) = trim(g.empcode
+
